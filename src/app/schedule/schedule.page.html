@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/home">Back</ion-back-button>
+    </ion-buttons>
+    <ion-title>Work Schedule</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="loggedInUser && loggedInUser.email" class="user-email" >
+    <ion-label color="tertiary">
+      Logged in as: {{loggedInUser.email}}
+    </ion-label>
+  </div>
+
+  <ng-container *ngFor="let list of workSchedule">
+    <!-- <ion-label> Email:{{list?.email}}</ion-label>  mistake -->
+     <ion-card>
+      <ion-card-header>User Schedule</ion-card-header>
+      <ion-card-content>
+        <!-- <ion-card-subtitle> Email:{{list?.email}}</ion-card-subtitle> -->
+        <ion-card-title>DayName:{{list?.dayName}}</ion-card-title>
+        <ion-card-subtitle>FromTime:{{list?.fromTime}}</ion-card-subtitle>
+        <ion-card-subtitle>ToTime:{{list?.toTime}}</ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+</ion-content>
+

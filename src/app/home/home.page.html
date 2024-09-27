@@ -1,0 +1,62 @@
+<ion-header [translucent]="true" expand="block">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="logout()">Logout</ion-button>
+    </ion-buttons>
+    <ion-title>home</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="weekdays" (ngSubmit)="setSchedule()">
+    <ion-grid formArrayName="Weekday1">
+      <ion-label>Weeks</ion-label>
+      <ion-row *ngFor="let item of dayControls; let i = index;" [formGroupName]="i">
+        <ion-item>
+         <ion-input formControlName="dayName" placeholder="Day name" readonly> </ion-input>
+          <!-- <ion-label *ngIf="item.get('dayName')?.value === 'Sunday'">Closed</ion-label> -->
+         <ion-col>
+            <div>
+          <ion-toggle formControlName="enabled" (ionChange)="toggleDay(i)"></ion-toggle></div>
+                 <ion-label *ngIf="!item.get('enabled')?.value">Closed</ion-label></ion-col>
+
+          <ion-col>
+            <!-- <ng-container *ngIf="item.get('enabled')?.value && item.get('dayName')?.value !== 'Sunday'"> -->
+               <ng-container *ngIf="item.get('enabled')?.value">
+               <ion-item>
+                <ion-button id="fromTimeTrigger{{i}}" expand="block">
+                  <ion-text>{{formattedFromTime[i] ? formattedFromTime[i] : 'Select FromTime'}}</ion-text>
+                </ion-button>
+                <ion-popover trigger="fromTimeTrigger{{i}}" triggerAction="click">
+                  <ng-template>
+                    <ion-datetime presentation="time" [preferWheel]="true" formControlName="fromTime"
+                      (ionChange)="checkTime(item.get('fromTime')?.value, i, 'from')"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+
+                <ion-button id="toTimeTrigger{{i}}" expand="block">
+                  <ion-text>{{formattedToTime[i] ? formattedToTime[i] : 'Select ToTime'}}</ion-text>
+                </ion-button>
+                <ion-popover trigger="toTimeTrigger{{i}}" triggerAction="click">
+                  <ng-template>
+                    <!-- [min]="totime" -->
+                    <ion-datetime presentation="time" [preferWheel]="true" formControlName="toTime"
+                      (ionChange)="checkTime(item.get('toTime')?.value, i, 'to')"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+
+
+              </ion-item>
+            </ng-container>
+          </ion-col>
+          <ion-col>
+          <ion-icon *ngIf="i===0" name="add-circle-outline" (click)="addNewDay()"></ion-icon>
+            <ion-icon name="remove-circle-outline" (click)="removeNewDay(i)"></ion-icon></ion-col>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <ion-icon *ngIf="dayControls.length==0" name="add-circle-outline" (click)="addNewDay()" ></ion-icon>
+    <ion-button type="submit" expand="block" [disabled]="weekdays.invalid">Set</ion-button>
+  </form>
+  <a [routerLink]="['/schedule']">Go to SavedSchedule</a>
+
+</ion-content>

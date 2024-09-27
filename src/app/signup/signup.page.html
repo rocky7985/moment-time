@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Signup
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <form [formGroup]="signupForm" (ngSubmit)="signup()">
+
+    <ion-item>
+      <ion-label>Select Role</ion-label>
+      <ion-select formControlName="role" placeholder="Choose the Profile to Signup">
+        <ion-select-option value="Manager">Manager</ion-select-option>
+        <ion-select-option value="Employee">Employee</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" formControlName="name" placeholder="Enter Name"></ion-input>
+      <ion-note slot="error" *ngIf="signupForm.get('name')?.hasError('required') && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)">
+        This field is required.
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input type="text" formControlName="email" placeholder="Enter Email"></ion-input>
+      <ion-note slot="error" *ngIf="signupForm.get('email')?.hasError('required') && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
+        This field is required.
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Phone</ion-label>
+      <ion-input type="tel" formControlName="phone" placeholder="Enter Phone"></ion-input>
+      <ion-note slot="error" *ngIf="signupForm.get('phone')?.hasError('required') && (signupForm.get('phone')?.dirty || signupForm.get('phone')?.touched)">
+        This field is required.
+      </ion-note>
+
+      <ion-note slot="end" *ngIf="signupForm.get('phone')?.hasError('minlength') || signupForm.get('phone')?.hasError('maxlength')" color="danger">
+        Phone No. must be 10 numbers long.
+      </ion-note>
+    </ion-item>
+
+    <ion-item *ngIf="signupForm.value.role === 'Employee'">
+      <ion-label>EmpId</ion-label>
+      <ion-input type="tel" formControlName="employeeId" placeholder="Enter EmpId"></ion-input>
+      <ion-note slot="error" *ngIf="signupForm.get('employeeId')?.hasError('required') && (signupForm.get('employeeId')?.dirty || signupForm.get('employeeId')?.touched)">
+        This field is required.
+      </ion-note>
+
+      <ion-note slot="end" *ngIf="signupForm.get('employeeId')?.hasError('minlength') || signupForm.get('employeeId')?.hasError('maxlength')" color="danger">
+        RollNo must be 5 numbers long.
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Address</ion-label>
+      <ion-input type="text" formControlName="address" placeholder="Enter address"></ion-input>
+      <ion-note slot="error" *ngIf="signupForm.get('address')?.hasError('required') && (signupForm.get('address')?.dirty || signupForm.get('address')?.touched)">
+        This field is required.
+      </ion-note>
+    </ion-item> 
+
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" formControlName="password" placeholder="Enter Password"></ion-input>
+      <ion-note slot="error" *ngIf="signupForm.get('password')?.hasError('required') && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)">
+        This field is required.
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Confirm Password</ion-label>
+      <ion-input type="password" formControlName="confirmPassword" placeholder="Enter confirmPassword"></ion-input>
+
+      <!-- <div *ngIf="signupForm.get('confirmPassword').invalid && signupForm.get('confirmPassword').touched">
+        Confirm Password is required and must match the password.
+      </div> -->
+
+      <ion-note slot="error" *ngIf="signupForm.value.password && signupForm.value.confirmPassword !== signupForm.value.password">
+         Password and Confirm Password do not match!
+      </ion-note>
+
+    </ion-item>
+
+    <!-- <ion-progress-bar type="indeterminate"></ion-progress-bar> -->
+
+
+    <ion-button type="submit" expand="block" [disabled]="signupForm.invalid">Register</ion-button>
+
+  </form>
+
+  <ion-button [routerLink]="['/login']">Go to Login</ion-button>
+
+</ion-content>
+

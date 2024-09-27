@@ -1,0 +1,7 @@
+{
+  "name": "comapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
